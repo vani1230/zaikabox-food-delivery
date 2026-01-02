@@ -1,7 +1,9 @@
 import express from "express"
 import dotenv from "dotenv"
 dotenv.config()
-import connectDb from "./config/db.js"
+
+import connectDb from "./config/db.js" // .js lagana is compulsory
+
 import cookieParser from "cookie-parser"
 import authRouter from "./routes/auth.routes.js"
 import cors from "cors"
@@ -26,16 +28,16 @@ const io=new Server(server,{
 })
 
 app.set("io",io)
-
-
-
 const port=process.env.PORT || 5000
+
+// konsi frontend sites backend allow krega to
 app.use(cors({
     origin:"http://localhost:5173",
     credentials:true
 }))
-app.use(express.json())
+app.use(express.json()) // frotendnd se jo b data aayga easily json format mei aaye or parse ho sake
 app.use(cookieParser())
+
 app.use("/api/auth",authRouter)
 app.use("/api/user",userRouter)
 app.use("/api/shop",shopRouter)
@@ -43,6 +45,7 @@ app.use("/api/item",itemRouter)
 app.use("/api/order",orderRouter)
 
 socketHandler(io)
+
 server.listen(port,()=>{
     connectDb()
     console.log(`server started at ${port}`)

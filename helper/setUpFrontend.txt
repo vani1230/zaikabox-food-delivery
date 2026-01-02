@@ -1,0 +1,14 @@
+cd frontend
+npm create vite@latest - projectname (.) -> React -> JS -> answer certail questions after that
+npm i
+browser -> tailwind css -> getstarted-> follow commands using vite
+delete App.css and add the command into index.css
+remove all content of App.jsx
+
+npm i react-router-dom react-icons 
+npm run dev
+create folder -> pages -> signin.jsx signup.jsx
+
+wrap <browserrouter> <App> </browserrouter> in main.jsx
+add routes to App.jsx 
+npm i axios

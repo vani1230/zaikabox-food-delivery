@@ -1,0 +1,26 @@
+00:00:00
+cd backend
+npm init - ans question or enter package.json wil be created
+npm i express mongoose nodemon dotenv bcryptjs jsonwebtoken cookie-parser cors- instaling packages
+make index.js - entry point
+
+"scripts": {
+    "dev": "nodemon index.js"
+  }, - update this in package.json
+
+folder creation -models controllers, routes, middleware, .env(file)
+open index.js and create server
+
+go to mongoDB altas and create new project
+create->free version->aws->create -> copy password->choose connection method for vs code-> copy string under 3. Connect to your MongoDB deployment.-> paste the string to .env mongodb variable
+create config folder->db.js
+
+go to models-> user.model.js
+
+create controller->auth.controllers.js
+
+create routes->auth.routes.js 
+
+controller -> connect to routes -> index.js but before this ad dthe middlewres 
+app.use(express.json()) 
+app.use(cookieParser())

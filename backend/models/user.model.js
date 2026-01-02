@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { type } from "os";
 
+// const userSchema = new mongoose.Schema({this is first object  to define schema },{and in this we make timestamps true})
+
 const userSchema = new mongoose.Schema({
     fullName: {
         type: String,
@@ -12,7 +14,7 @@ const userSchema = new mongoose.Schema({
         unique:true
     },
     password:{
-        type: String,
+        type: String, //required tru anhi  krte bcz anyperson can authenticate thru google
     },
     mobile:{
         type: String,
@@ -20,7 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:["user","owner","deliveryBoy"],
+        enum:["user","owner","deliveryBoy"], // define krre hai ki iske aklawa kuch nahi hona chaiye
         required:true
     },
     resetOtp:{
@@ -42,14 +44,14 @@ const userSchema = new mongoose.Schema({
         default:false
     },
    location:{
-type:{type:String,enum:['Point'],default:'Point'},
-coordinates:{type:[Number],default:[0,0]}
+        type:{type:String,enum:['Point'],default:'Point'},
+        coordinates:{type:[Number],default:[0,0]}
    }
   
 }, { timestamps: true })
 
 userSchema.index({location:'2dsphere'})
 
-
+            
 const User=mongoose.model("User",userSchema)
 export default User

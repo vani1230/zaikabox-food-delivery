@@ -2,6 +2,7 @@ import User from "../models/user.model.js"
 import bcrypt, { hash } from "bcryptjs"
 import genToken from "../utils/token.js"
 import { sendOtpMail } from "../utils/mail.js"
+
 export const signUp=async (req,res) => {
     try {
         const {fullName,email,password,mobile,role}=req.body
@@ -16,25 +17,29 @@ export const signUp=async (req,res) => {
             return res.status(400).json({message:"mobile no must be at least 10 digits."})
         }
      
-        const hashedPassword=await bcrypt.hash(password,10)
+        const hashedPassword=await bcrypt.hash(password,10) // 10 is salt -> extra charcter to be included in password
+
         user=await User.create({
             fullName,
             email,
             role,
             mobile,
             password:hashedPassword
-        })
+        }) // User model mei jaake store hogy ye and mongodb automatically _id for user create krta hai.
+
+        // now go to utils->token.js - create gentoken
 
         const token=await genToken(user._id)
+
+        // storing token into browser cookie
         res.cookie("token",token,{
             secure:false,
             sameSite:"strict",
-            maxAge:7*24*60*60*1000,
+            maxAge:7*24*60*60*1000, // kb expire hoga in millisecond
             httpOnly:true
         })
-  
         return res.status(201).json(user)
-
+        
     } catch (error) {
         return res.status(500).json(`sign up error ${error}`)
     }
@@ -71,7 +76,7 @@ export const signIn=async (req,res) => {
 export const signOut=async (req,res) => {
     try {
         res.clearCookie("token")
-return res.status(200).json({message:"log out successfully"})
+        return res.status(200).json({message:"log out successfully"})
     } catch (error) {
         return res.status(500).json(`sign out error ${error}`)
     }
